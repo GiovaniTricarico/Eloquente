@@ -13,7 +13,7 @@ class AlunoController extends Controller
     public function index()
     {
         $alunos = Aluno::all();
-        // $alunos = Aluno::withTrashed()->get();
+        $alunos = Aluno::withTrashed()->get();
         
         return view('alunos',['alunos' => $alunos]);
     }
@@ -21,18 +21,25 @@ class AlunoController extends Controller
 
     public function insereAluno(Request $request)
     {
+        $aluno = new Aluno;
+        $aluno->alteraAluno($request);
         return back();
     }
 
 
     public function atualizaAluno(Request $request, $id)
     {
-       return back();
+        $aluno = Aluno::find($id);
+        $aluno->alteraAluno($request);
+        return back();
     }
 
     public function deletaAluno($id)
     {
-       return back();
+        Aluno::destroy($id);
+        //$ex_aluno = Aluno::find($id);
+        //$ex_aluno->delete();
+        return back();
     }
 
 
